@@ -7,7 +7,7 @@ export default {
    ** Headers of the page
    */
   head: {
-    title: pkg.name,
+    title: 'Tractor Beam',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -29,7 +29,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['@/plugins/antd-ui'],
+  plugins: ['@/plugins/antd-ui', '@/plugins/vue-mq'],
 
   /*
    ** Nuxt.js modules
@@ -61,12 +61,12 @@ export default {
     extend(config, ctx) {
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
-        config.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
-          exclude: /(node_modules)/
-        })
+        // config.module.rules.push({
+        //   enforce: 'pre',
+        //   test: /\.(js|vue)$/,
+        //   loader: 'eslint-loader',
+        //   exclude: /(node_modules)/
+        // })
       }
     }
   }

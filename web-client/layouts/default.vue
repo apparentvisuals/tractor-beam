@@ -1,55 +1,55 @@
 <template>
-  <div>
-    <nuxt />
-  </div>
+  <a-layout id="layout-root">
+    <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%' }">
+      <div class="logo" :style="{ paddingLeft: '50px', float: 'right' }">
+        <a-button type="primary" icon="plus" @click="addToLibrary">Add</a-button>
+      </div>
+      <a-menu
+        theme="dark"
+        mode="horizontal"
+        :style="{ lineHeight: '64px' }"
+        :selectedKeys="[current]"
+        :defaultSelectedKeys="['1']"
+        @click="handleClick"
+      >
+        <a-menu-item key="1">Library</a-menu-item>
+        <a-menu-item key="2">Settings</a-menu-item>
+      </a-menu>
+    </a-layout-header>
+    <a-layout-content :style="{ padding: this.$mq === 'show' ? '24px' : '0', marginTop: '64px' }">
+      <nuxt/>
+    </a-layout-content>
+    <add-form :visible="addVisible" @close="close"></add-form>
+  </a-layout>
 </template>
 
+<script>
+import AddForm from '../components/AddForm.vue';
+
+export default {
+  components: { AddForm },
+  data() {
+    return {
+      current: '1',
+      addVisible: false,
+    }
+  },
+  methods: {
+    addToLibrary() {
+      this.addVisible = true;
+    },
+    handleClick(e) {
+      this.current = e.key;
+    },
+    close() {
+      this.addVisible = false;
+    }
+  }
+}
+</script>
+
 <style>
-html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-}
-
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-  margin: 0;
-}
-
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
-
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+body {
+  background: #f0f2f5;
 }
 </style>
