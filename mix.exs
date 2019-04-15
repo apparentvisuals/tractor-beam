@@ -4,10 +4,10 @@ defmodule TractorBeam.MixProject do
   def project do
     [
       app: :tractor_beam,
-      version: "0.1.0",
+      version: "0.1.0-1",
       elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix, :gettext, :phoenix_swagger] ++ Mix.compilers(),
+      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -36,7 +36,6 @@ defmodule TractorBeam.MixProject do
       {:phoenix, "~> 1.4.2"},
       {:phoenix_ecto, "~> 3.0"},
       {:phoenix_pubsub, "~> 1.1"},
-      {:phoenix_swagger, "~> 0.8.1"},
       {:ecto_mnesia, "~> 0.9.1"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},

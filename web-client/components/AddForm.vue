@@ -4,7 +4,7 @@
     :visible="visible"
     title="Search"
     okText="Close"
-    @cancel="() => $emit('close')"
+    @cancel="close"
     :footer="null"
     width="90%"
   >
@@ -16,7 +16,7 @@
     </a-input-search>
     <a-list :loading="loading" itemLayout="vertical" :pagination="pagination" :dataSource="results">
       <a-list-item slot="renderItem" slot-scope="item" key="item.id">
-        <img slot="extra" alt="poster" :src="item.post_url">
+        <img slot="extra" alt="poster" :src="item.poster_url">
         <a-list-item-meta :title="item.title" :description="item.summary"></a-list-item-meta>
       </a-list-item>
     </a-list>
@@ -36,6 +36,9 @@ export default {
         onChange: page => {
           this.search(page)
         },
+        showTotal: (total, range) => {
+          return `${total} items`;
+        },
         total: 0,
         pageSize: 20
       }
@@ -54,6 +57,12 @@ export default {
       this.results = result.data.data
       this.pagination.total = result.data.total
       this.loading = false
+    },
+    close() {
+      this.results = []
+      this.pagination.total = 0
+      this.loading = false
+      this.$emit('close')
     }
   }
 }

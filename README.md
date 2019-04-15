@@ -1,25 +1,37 @@
 # Tractor Beam
 
-To start your Phoenix server:
+## Requirements
+- Erlang VM
+- Elixir
 
-  * Setup `config/dev.secret.exs` file
-  ``` 
-  use Mix.Config
-  config :tractor_beam, TractorBeam.Indexers.NZBGeek,
-    api_key: <your_api_key>
-  ```
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Start Phoenix endpoint with `mix phx.server`
+Optional:
+- NodeJS 8+
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+## Running the server
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+### Setup
 
-## Learn more
+1. Add `config/dev.secret.exs` file
+    ``` 
+    use Mix.Config
+    config :tractor_beam, TractorBeam.Indexers.NZBGeek,
+      api_key: "<nzb_geek_api_key>"
+    config :tractor_beam, TractorBeam.Metadata.OMDB,
+      api_key: "<OMDB_api_key>"
+    config :tractor_beam, TractorBeam.Metadata.TMDB,
+      api_key: "<TMDB_api_key>"
+    ```
+2. Install dependencies with `mix deps.get`
+3. If this is the first time, create and migrate your database with `mix ecto.setup`
+4. Start Phoenix endpoint with `mix phx.server`
+5. Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+## Web client
+The repo has the latest UI code pre-compiled under `priv/static`, to work on the web-client nodeJS is required.
+
+### Setup
+
+1. `cd web-client`
+2. `npm install`
+3. `npm run dev`
+4. Now you can visit [`localhost:3000`](http://localhost:3000) from your browser. The web-client proxies api requests to the server at port 4000, so both need to be running when developing client code.
