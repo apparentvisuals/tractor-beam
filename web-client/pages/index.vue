@@ -7,9 +7,7 @@
       </a-menu>
     </a-layout-sider>
     <a-layout-content>
-      <section class="container">
-        <div :style="{ background: '#fff', padding: '24px', minHeight: '380px' }">
-        </div>
+      <section :style="{ background: '#fff', padding: '24px', minHeight: '380px' }">
       </section>
     </a-layout-content>
   </a-layout>

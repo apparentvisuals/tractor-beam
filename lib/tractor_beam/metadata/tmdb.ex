@@ -14,10 +14,10 @@ defmodule TractorBeam.Metadata.TMDB do
     |> Task.await(145000)
   end
 
-  defp _search(query) do
-    HTTPoison.get!("#{@url}/search/#{query.type}", [], params: %{api_key: @api_key, query: query.name}).body
+  defp _search(%SearchQuery{type: type, name: name, page: page} = _query) do
+    HTTPoison.get!("#{@url}/search/#{type}", [], params: %{api_key: @api_key, query: name, page: page}).body
     |> Jason.decode
-    |> response_to_common_format(query.type)
+    |> response_to_common_format(type)
   end
 
   def response_to_common_format({:ok, results} = _response, type) do
@@ -32,14 +32,14 @@ defmodule TractorBeam.Metadata.TMDB do
       title: result["name"],
       original_title: result["original_name"],
       summary: result["overview"],
-      post_url: "#{@image_url}#{result["poster_path"]}"}
+      poster_url: "#{@image_url}#{result["poster_path"]}"}
   end
 
   def result_to_common_format(result, "movie" = _type) do
     %{id: result["id"],
       title: result["title"],
       summary: result["overview"],
-      post_url: "#{@image_url}#{result["poster_path"]}"}
+      poster_url: "#{@image_url}#{result["poster_path"]}"}
   end
 
 end

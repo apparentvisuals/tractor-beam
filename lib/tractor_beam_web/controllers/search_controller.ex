@@ -15,14 +15,14 @@ defmodule TractorBeamWeb.SearchController do
   end
 
   def validate(params \\ %{}) do
-    %SearchQuery{} 
+    %SearchQuery{}
     |> SearchQuery.changeset(params)
     |> response
   end
 
   def response(%Ecto.Changeset{valid?: true} = changeset) do
-    %{name: name, type: type} = changeset.changes
-    {:ok, %SearchQuery{name: name, type: type}}
+    query = changeset.changes
+    {:ok, %SearchQuery{name: query.name, type: query.type, page: query[:page]}}
   end
   
   def response(%Ecto.Changeset{valid?: false} = changeset) do

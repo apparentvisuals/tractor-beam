@@ -7,12 +7,13 @@ defmodule TractorBeam.SearchQuery do
   embedded_schema do
     field :name, :string
     field :type, :string
+    field :page, :string
   end
 
   @doc false
   def changeset(%SearchQuery{} = query, attrs) do
     query
-    |> cast(attrs, [:type, :name])
+    |> cast(attrs, [:type, :name, :page])
     |> validate_required([:type, :name])
   end
 end
