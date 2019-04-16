@@ -8,7 +8,8 @@ defmodule TractorBeamWeb.Router do
   scope "/api", TractorBeamWeb do
     pipe_through :api
     resources "/downloads", DownloadController
-    resources "/search", SearchController
+    resources "/search", SearchController, only: [:index]
+    resources "/shows", ShowController
   end
 
   def swagger_info do
