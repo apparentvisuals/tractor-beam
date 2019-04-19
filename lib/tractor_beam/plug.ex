@@ -1,48 +1,47 @@
 defmodule TractorBeam.Plug do
-end
+  defmodule Auth do
+    @api_key Application.get_env(:tractor_beam, TractorBeam.Plug.Auth)[:api_key]
+    use Plug.Builder
 
-defmodule TractorBeam.Plug.IndexHtml do
-  @behaviour Plug
-  @moduledoc """
-  Serves `index.html` pages for requests to paths without a filename in Plug applications.
-  """
+    plug :verify_key
 
-  @doc ~S"""
-  Initialize plug options
+    def verify_key(conn, _opts) do
+      case get_req_header(conn, "authorization") do
+        ["Bearer " <> @api_key] -> conn
+        _ -> unauthorized(conn)
+      end
+    end
 
-   - at: The request path to reach for static assets, defaults to "/"
-   - default_file: Filename to serve when request path is a directory, defaults to "index.html"
-
-  ## Example
-
-      iex> Plug.Static.IndexHtml.init(at: "/doc")
-      [matcher: ~r|^/doc/(.*/)?$|, default_file: "index.html"]
-  """
-  def init([]), do: init(at: "/")
-  def init(at: path), do: init(at: path, default_file: "index.html")
-  def init(at: path, default_file: filename) do
-    path_no_slash = String.trim_trailing path, "/"
-    [matcher: ~r|^#{path_no_slash}(.*/)?$|, default_file: filename]
+    def unauthorized(conn) do
+      conn
+      |> send_resp(401, "unauthorized")
+      |> halt()
+    end
   end
 
-  @doc """
-  Invokes the plug, adding default_file to request_path and path_info for directory paths
+  defmodule IndexHtml do
+    @behaviour Plug
 
-  ## Example
+    @doc false
+    def init([]), do: init(at: "/")
+    def init(at: path), do: init(at: path, default_file: "index.html")
 
-      iex> opts = Plug.Static.IndexHtml.init(at: "/doc")
-      iex> conn = %Plug.Conn{request_path: "/doc/a/", path_info: ["doc", "a"]}
-      iex> Plug.Static.IndexHtml.call(conn, opts) |> Map.take([:request_path, :path_info])
-      %{path_info: ["doc", "a", "index.html"], request_path: "/doc/a/index.html"}
-  """
-  def call(conn, matcher: pattern, default_file: filename) do
-    if String.match? conn.request_path, pattern do
-      %{conn |
-        request_path: "#{conn.request_path}#{filename}",
-        path_info: conn.path_info ++ [filename]
-      }
-    else
-      conn
+    def init(at: path, default_file: filename) do
+      path_no_slash = String.trim_trailing(path, "/")
+      [matcher: ~r|^#{path_no_slash}(.*/)?$|, default_file: filename]
+    end
+
+    @doc false
+    def call(conn, matcher: pattern, default_file: filename) do
+      if String.match?(conn.request_path, pattern) do
+        %{
+          conn
+          | request_path: "#{conn.request_path}#{filename}",
+            path_info: conn.path_info ++ [filename]
+        }
+      else
+        conn
+      end
     end
   end
 end

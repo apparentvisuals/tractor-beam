@@ -3,7 +3,6 @@ defmodule TractorBeamWeb.DownloadView do
   alias TractorBeamWeb.DownloadView
 
   def render("index.json", %{downloads: downloads}) do
-    IO.inspect(downloads)
     %{data: render_many(downloads, DownloadView, "download.json")}
   end
 

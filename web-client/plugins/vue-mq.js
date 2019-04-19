@@ -1,5 +1,5 @@
-import Vue from 'vue'
-import VueMq from 'vue-mq'
+import Vue from 'vue';
+import VueMq from 'vue-mq';
 
 export default () => {
   Vue.use(VueMq, {
@@ -8,5 +8,5 @@ export default () => {
       show: Infinity
     },
     defaultBreakpoint: 'hide'
-  })
-}
+  });
+};

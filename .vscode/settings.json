@@ -1,3 +1,8 @@
 {
-  "prettier.eslintIntegration": true
+  "prettier.eslintIntegration": true,
+  "eslint.validate": [
+    "javascript",
+    "vue"
+  ],
+  "vetur.format.defaultFormatter.html": "prettier"
 }

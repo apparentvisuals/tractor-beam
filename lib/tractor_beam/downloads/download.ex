@@ -19,8 +19,7 @@ defmodule TractorBeam.Downloads.Download do
     |> validate_inclusion(:type, ["movie", "tv"])
     |> validate_inclusion(:status, [
       "pending",
-      "not_monitored",
-      "monitored",
+      "queued",
       "downloading",
       "downloaded"
     ])

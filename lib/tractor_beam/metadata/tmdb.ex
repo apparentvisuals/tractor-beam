@@ -32,7 +32,7 @@ defmodule TractorBeam.Metadata.TMDB do
   end
 
   def result_to_common_format(result, "tv" = _type) do
-    %{id: result["id"],
+    %{id: Integer.to_string(result["id"]),
       title: result["name"],
       original_title: result["original_name"],
       summary: result["overview"],
@@ -40,7 +40,7 @@ defmodule TractorBeam.Metadata.TMDB do
   end
 
   def result_to_common_format(result, "movie" = _type) do
-    %{id: result["id"],
+    %{id: Integer.to_string(result["id"]),
       title: result["title"],
       summary: result["overview"],
       poster_url: "#{@poster_url}#{result["poster_path"]}"}
