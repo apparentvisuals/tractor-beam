@@ -2,14 +2,9 @@
   <a-layout :style="{ padding: $mq === 'show' ? '50px' : '0' }">
     <a-layout-content>
       <section :style="{ background: '#fff', padding: '24px', minHeight: '380px' }">
-        <a-menu mode="horizontal" :selected-keys="[current]" @click="handleClick">
-          <a-menu-item key="all">All</a-menu-item>
-          <a-menu-item key="movie">Movies</a-menu-item>
-          <a-menu-item key="tv">TV</a-menu-item>
-          <a-menu-item key="music">Music</a-menu-item>
-          <a-menu-item key="comic">Comic</a-menu-item>
-        </a-menu>
-        <a-list item-layout="vertical" :pagination="pagination" :data-source="collection">
+        <h1>{{ show.title }}</h1>
+        <p>{{ show.summary }}</p>
+        <a-list item-layout="vertical" :pagination="pagination" :data-source="downloads">
           <a-list-item slot="renderItem" key="item.id" slot-scope="item">
             <a-list-item-meta>
               <n-link slot="title" :to="{ name: 'show', params: { show: item.id } }">{{ item.title }}</n-link>
@@ -27,7 +22,8 @@
 export default {
   data() {
     return {
-      current: 'all',
+      current: 'downloads',
+      downloads: [],
       pagination: {
         showTotal: (total, range) => {
           return `${total} items`;
@@ -41,13 +37,11 @@ export default {
       return this.$store.state.collection.shows.filter(show => show.type === this.current || this.current === 'all');
     }
   },
-  fetch({ store }) {
-    store.dispatch('collection/loadCollection');
-  },
-  methods: {
-    handleClick(e) {
-      this.current = e.key;
-    }
+  async asyncData({ $axios, params }) {
+    const result = await $axios.$get('/api/shows/' + params.show);
+    return {
+      show: result.data
+    };
   }
 };
 </script>

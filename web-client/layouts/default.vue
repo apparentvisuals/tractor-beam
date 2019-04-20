@@ -6,17 +6,12 @@
           Add
         </a-button>
       </div>
-      <a-menu theme="dark" mode="horizontal" :style="{ lineHeight: '64px' }" :selected-keys="[current]" :default-selected-keys="['1']" @click="handleClick">
-        <a-menu-item key="1">Library</a-menu-item>
-        <a-menu-item key="2">Settings</a-menu-item>
+      <a-menu theme="dark" mode="horizontal" :style="{ lineHeight: '64px' }" :selected-keys="[current]" @click="handleClick">
+        <a-menu-item key="library">Library</a-menu-item>
+        <a-menu-item key="settings">Settings</a-menu-item>
       </a-menu>
     </a-layout-header>
-    <a-layout-content
-      :style="{
-        padding: this.$mq === 'show' ? '24px' : '0',
-        marginTop: '64px'
-      }"
-    >
+    <a-layout-content :style="{ marginTop: '64px' }">
       <nuxt />
     </a-layout-content>
     <add-form :visible="addVisible" @close="close"></add-form>
@@ -30,7 +25,7 @@ export default {
   components: { AddForm },
   data() {
     return {
-      current: '1',
+      current: 'library',
       addVisible: false
     };
   },
