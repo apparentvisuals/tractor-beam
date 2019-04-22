@@ -53,11 +53,11 @@ defmodule TractorBeam.Shows do
   def create_show(attrs \\ %{}) do
     %Show{}
     |> Show.changeset(attrs)
-    |> put_metadata(attrs)
+    |> put_metadata
     |> Repo.insert()
   end
 
-  defp put_metadata(%Ecto.Changeset{valid?: true} = changeset, attrs) do
+  defp put_metadata(%Ecto.Changeset{valid?: true} = changeset) do
     item = changeset.changes
     case TMDB.detail(%{ type: item.type, id: item.external_id}) do
       {:ok, metadata} -> put_change(changeset, :imdb_id, metadata["imdb_id"])
@@ -65,7 +65,7 @@ defmodule TractorBeam.Shows do
     end
   end
 
-  defp put_metadata(%Ecto.Changeset{valid?: false} = changeset, attrs) do
+  defp put_metadata(%Ecto.Changeset{valid?: false} = changeset) do
     changeset
   end
 

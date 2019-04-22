@@ -1,6 +1,6 @@
 defmodule TractorBeamWeb.SearchView do
-  @backdrop_url "https://image/tmdb.org/t/p/w1280"
-  @poster_url "https://image.tmdb.org/t/p/w92"
+  @backdrop_url "https://image.tmdb.org/t/p/w1280"
+  @poster_url "https://image.tmdb.org/t/p/w154"
 
   use TractorBeamWeb, :view
   alias TractorBeamWeb.SearchView

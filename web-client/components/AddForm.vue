@@ -76,6 +76,7 @@ export default {
         title: item.title,
         summary: item.summary,
         poster_url: item.poster_url,
+        backdrop_url: item.backdrop_url,
         external_id: item.id,
         external_source: 'tmdb'
       };
