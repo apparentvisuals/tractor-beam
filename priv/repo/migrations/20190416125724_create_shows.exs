@@ -12,8 +12,12 @@ defmodule TractorBeam.Repo.Migrations.CreateShows do
       add :poster_url, :string
       add :backdrop_url, :string
 
+      # indexer source
       add :external_id, :string
       add :external_source, :string
+
+      # metadata
+      add :imdb_id, :string
 
       timestamps()
     end

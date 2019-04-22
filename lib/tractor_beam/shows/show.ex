@@ -15,6 +15,8 @@ defmodule TractorBeam.Shows.Show do
     field :external_id, :string
     field :external_source, :string
 
+    field :imdb_id, :string
+
     timestamps()
   end
 

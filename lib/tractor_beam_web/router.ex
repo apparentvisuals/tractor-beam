@@ -13,7 +13,7 @@ defmodule TractorBeamWeb.Router do
   scope "/api", TractorBeamWeb do
     pipe_through [:api, :authorized]
     resources "/downloads", DownloadController
-    resources "/search", SearchController, only: [:index]
+    resources "/search", SearchController, only: [:index, :show]
     resources "/shows", ShowController
   end
 

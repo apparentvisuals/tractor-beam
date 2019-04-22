@@ -1,7 +1,7 @@
-defmodule TractorBeam.SearchQuery do
+defmodule TractorBeam.Search.SearchQuery do
   use Ecto.Schema
   import Ecto.Changeset
-  alias TractorBeam.SearchQuery
+  alias TractorBeam.Search.SearchQuery
 
   @primary_key false
   embedded_schema do
@@ -15,5 +15,6 @@ defmodule TractorBeam.SearchQuery do
     query
     |> cast(attrs, [:type, :name, :page])
     |> validate_required([:type, :name])
+    |> validate_inclusion(:type, ["movie", "tv"])
   end
 end

@@ -1,7 +1,7 @@
 <template>
   <a-layout id="layout-root">
-    <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%' }">
-      <div class="logo" :style="{ paddingLeft: '50px', float: 'right' }">
+    <a-layout-header :style="{ padding: $mq === 'show' ? '0 50px' : '0 24px', position: 'fixed', zIndex: 1, width: '100%' }">
+      <div :style="{ float: 'right' }">
         <a-button type="primary" icon="plus" @click="addToLibrary">
           Add
         </a-button>

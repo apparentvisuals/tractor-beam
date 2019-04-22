@@ -1,15 +1,15 @@
 defmodule TractorBeamWeb.SearchController do
   use TractorBeamWeb, :controller
 
-  alias TractorBeam.SearchQuery
+  alias TractorBeam.Search.SearchQuery
   alias TractorBeam.Metadata.TMDB
 
   action_fallback TractorBeamWeb.FallbackController
 
   def index(conn, params) do
-    with {:ok, %SearchQuery{} = query} <- validate(params) do
+    with {:ok, %SearchQuery{type: type} = query} <- validate(params) do
       with {:ok, results} <- TMDB.search(query) do
-        render(conn, "index.json", results: results)
+        render(conn, "index.json", %{results: results, type: type})
       end
     end
   end

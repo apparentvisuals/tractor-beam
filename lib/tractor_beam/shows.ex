@@ -4,9 +4,10 @@ defmodule TractorBeam.Shows do
   """
 
   import Ecto.Query, warn: false
+  import Ecto.Changeset
   alias TractorBeam.Repo
-
   alias TractorBeam.Shows.Show
+  alias TractorBeam.Metadata.TMDB
 
   @doc """
   Returns the list of shows.
@@ -52,7 +53,20 @@ defmodule TractorBeam.Shows do
   def create_show(attrs \\ %{}) do
     %Show{}
     |> Show.changeset(attrs)
+    |> put_metadata(attrs)
     |> Repo.insert()
+  end
+
+  defp put_metadata(%Ecto.Changeset{valid?: true} = changeset, attrs) do
+    item = changeset.changes
+    case TMDB.detail(%{ type: item.type, id: item.external_id}) do
+      {:ok, metadata} -> put_change(changeset, :imdb_id, metadata["imdb_id"])
+      _ -> changeset
+    end
+  end
+
+  defp put_metadata(%Ecto.Changeset{valid?: false} = changeset, attrs) do
+    changeset
   end
 
   @doc """
