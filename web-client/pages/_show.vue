@@ -4,13 +4,14 @@
       <section :style="{ background: '#fff', padding: '24px', minHeight: '380px' }">
         <h1>{{ show.title }}</h1>
         <p>{{ show.summary }}</p>
-        <a-list item-layout="vertical" :pagination="pagination" :data-source="downloads">
+        <a-list :loading="loading" item-layout="vertical" :pagination="pagination" :data-source="downloads">
           <a-list-item slot="renderItem" key="item.id" slot-scope="item">
             <a-list-item-meta>
-              <n-link slot="title" :to="{ name: 'show', params: { show: item.id } }">{{ item.title }}</n-link>
-              <span slot="description">{{ item.summary }}</span>
+              <span slot="title" style="word-break: break-all">{{ item.title }}</span>
             </a-list-item-meta>
-            <img slot="extra" alt="poster" :src="item.poster_url" width="150" />
+            <a slot="actions" :href="item.link">
+              <a-icon type="download" />
+            </a>
           </a-list-item>
         </a-list>
       </section>
@@ -38,10 +39,23 @@ export default {
     }
   },
   async asyncData({ $axios, params }) {
-    const result = await $axios.$get('/api/shows/' + params.show);
+    const show = await $axios.$get('/api/shows/' + params.show);
+    // const nzbs = await $axios.$get(`/api/nzbs/${show.data.id}`);
     return {
-      show: result.data
+      show: show.data,
+      // downloads: nzbs.data
     };
+  },
+  created() {
+    this.lookup();
+  },
+  methods: {
+    async lookup() {
+      this.loading = true;
+      const nzbs = await this.$axios.$get(`/api/nzbs/${this.show.id}`);
+      this.downloads = nzbs.data;
+      this.loading = false;
+    }
   }
 };
 </script>

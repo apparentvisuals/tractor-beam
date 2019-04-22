@@ -21,8 +21,14 @@ defmodule TractorBeam.Protocols.Newznab do
         |> parse_search_xml
       end
 
+      def search_imdb_id(id) do
+        HTTPoison.get!("#{api_url()}/api?apikey=#{api_key()}&t=movie&imdbid=#{id}").body
+        |> parse_search_xml
+      end
+
       defp parse_search_xml(body) do
-        body |> xpath(
+        body 
+        |> xpath(
           ~x"//rss/channel",
           items: [
             ~x"./item"l,
@@ -34,7 +40,8 @@ defmodule TractorBeam.Protocols.Newznab do
       end
 
       defp parse_caps_xml(body) do
-        body |> xpath(
+        body 
+        |> xpath(
           ~x"//caps",
           functions: [
             ~x"./searching",

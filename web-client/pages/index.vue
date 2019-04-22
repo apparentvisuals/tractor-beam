@@ -15,7 +15,7 @@
               <n-link slot="title" :to="{ name: 'show', params: { show: item.id } }">{{ item.title }}</n-link>
               <span slot="description">{{ item.summary }}</span>
             </a-list-item-meta>
-            <img slot="extra" alt="poster" :src="item.poster_url" width="150" />
+            <img slot="extra" alt="poster" :src="item.poster_url" width="92" />
           </a-list-item>
         </a-list>
       </section>

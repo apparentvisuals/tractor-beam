@@ -15,6 +15,7 @@ defmodule TractorBeamWeb.Router do
     resources "/downloads", DownloadController
     resources "/search", SearchController, only: [:index, :show]
     resources "/shows", ShowController
+    resources "/nzbs", NZBController, only: [:show]
   end
 
   def swagger_info do
