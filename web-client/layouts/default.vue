@@ -35,6 +35,13 @@ export default {
     },
     handleClick(e) {
       this.current = e.key;
+      switch (e.key) {
+        case 'library':
+          this.$router.push('/');
+          break;
+        case 'settings':
+          break;
+      }
     },
     close() {
       this.addVisible = false;
